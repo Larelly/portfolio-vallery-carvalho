@@ -1,4 +1,4 @@
-======
+/*======
    SCRIPT.JS — Portfólio de Vallery Carvalho
    JavaScript puro (Vanilla JS), sem jQuery, React ou qualquer
    biblioteca externa.
@@ -19,11 +19,6 @@
  
 document.addEventListener("DOMContentLoaded", function () {
  
-  /* ==========================================================
-     1. MENU RESPONSIVO
-     Em telas pequenas o menu fica escondido e é aberto pelo
-     botão "hambúrguer".
-     ========================================================== */
  
   var botaoMenu = document.getElementById("botao-menu");
   var menu = document.getElementById("menu");
