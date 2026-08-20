@@ -1,0 +1,957 @@
+/* ============================================================
+   ESTILO.CSS — Portfólio de Vallery Carvalho
+   CSS3 puro, sem Bootstrap, Tailwind ou qualquer framework.
+
+   Sumário:
+   1.  Variáveis de cor e tipografia (temas claro e escuro)
+   2.  Reset e base
+   3.  Cabeçalho e menu de navegação
+   4.  Botões
+   5.  Seção "Sobre mim" (capa, ficha, cartões, etiquetas)
+   6.  Seção "Formação" (linha do tempo e idiomas)
+   7.  Seção "Portfólio"
+   8.  Seção "Contato" (formulário)
+   9.  Modal de confirmação
+   10. Rodapé
+   11. Responsividade (telas menores)
+   12. Acessibilidade e preferência por menos animação
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   1. VARIÁVEIS DE COR E TIPOGRAFIA
+   As "custom properties" ficam em :root e são reaproveitadas
+   no arquivo inteiro. Para trocar o tema basta alterar esses
+   valores — é isso que o JavaScript faz ao mudar o atributo
+   data-tema do <html>.
+   ------------------------------------------------------------ */
+:root {
+  /* Tema claro (padrão) */
+  --cor-fundo: #f2f0f5;
+  --cor-fundo-alt: #e9e5ef;
+  --cor-superficie: #ffffff;
+  --cor-texto: #191622;
+  --cor-texto-suave: #5d5870;
+  --cor-destaque: #5c2e91;      /* ameixa: cor principal da marca */
+  --cor-destaque-forte: #40206a;
+  --cor-realce: #b0782a;        /* âmbar: usado com muita moderação */
+  --cor-borda: #d6d0e0;
+  --sombra: 0 1px 2px rgba(25, 22, 34, .06), 0 12px 28px rgba(25, 22, 34, .07);
+
+  /* Tipografia */
+  --fonte-titulo: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  --fonte-texto: "Inter", "Segoe UI", Arial, sans-serif;
+  --fonte-mono: "IBM Plex Mono", "Courier New", monospace;
+
+  /* Medidas reaproveitadas */
+  --largura-maxima: 1120px;
+  --raio: 14px;
+  --transicao: 240ms ease;
+}
+
+/* Tema escuro: os mesmos nomes de variáveis recebem outros valores.
+   O atributo data-tema="escuro" é colocado no <html> pelo JavaScript. */
+[data-tema="escuro"] {
+  --cor-fundo: #14111c;
+  --cor-fundo-alt: #1c1828;
+  --cor-superficie: #221d31;
+  --cor-texto: #f1eef7;
+  --cor-texto-suave: #a79fbd;
+  --cor-destaque: #b79cf0;
+  --cor-destaque-forte: #d6c6ff;
+  --cor-realce: #e5b567;
+  --cor-borda: #362f4a;
+  --sombra: 0 1px 2px rgba(0, 0, 0, .4), 0 14px 34px rgba(0, 0, 0, .35);
+}
+
+
+/* ------------------------------------------------------------
+   2. RESET E BASE
+   ------------------------------------------------------------ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* padding e borda passam a caber dentro da largura */
+}
+
+html {
+  scroll-behavior: smooth;  /* rolagem suave ao clicar nas âncoras do menu */
+  scroll-padding-top: 92px; /* impede que o menu fixo cubra o título da seção */
+}
+
+body {
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: var(--fonte-texto);
+  font-size: 1rem;
+  line-height: 1.65;
+  transition: background-color var(--transicao), color var(--transicao);
+}
+
+a {
+  color: var(--cor-destaque);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* Container central usado por todas as seções */
+.conteudo {
+  width: 100%;
+  max-width: var(--largura-maxima);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Espaçamento vertical padrão das seções */
+.secao {
+  padding: 96px 0;
+}
+
+.secao--alternada {
+  background-color: var(--cor-fundo-alt);
+  transition: background-color var(--transicao);
+}
+
+/* "Eyebrow": rótulo pequeno em fonte monoespaçada acima dos títulos */
+.eyebrow {
+  font-family: var(--fonte-mono);
+  font-size: .78rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+  margin-bottom: 14px;
+}
+
+.secao__titulo {
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  font-size: 1.65rem;
+  letter-spacing: -.01em;
+  margin: 56px 0 22px;
+}
+
+.secao__titulo--grande {
+  font-size: clamp(2rem, 5vw, 3.1rem);
+  font-weight: 800;
+  margin: 0 0 26px;
+}
+
+.texto-largo {
+  max-width: 62ch;
+  color: var(--cor-texto-suave);
+}
+
+
+/* ------------------------------------------------------------
+   3. CABEÇALHO E MENU
+   position: sticky mantém o menu visível no topo durante a
+   rolagem, atendendo ao requisito de menu presente em todas
+   as seções.
+   ------------------------------------------------------------ */
+.cabecalho {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: color-mix(in srgb, var(--cor-fundo) 88%, transparent);
+  backdrop-filter: blur(10px); /* leve desfoque no conteúdo que passa por trás */
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.cabecalho__interno {
+  max-width: var(--largura-maxima);
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--cor-texto);
+}
+
+.marca:hover {
+  text-decoration: none;
+}
+
+/* Iniciais dentro de um quadrado: elemento de identidade visual */
+.marca__iniciais {
+  font-family: var(--fonte-mono);
+  font-size: .85rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+  background-color: var(--cor-destaque);
+  color: #ffffff;
+  padding: 6px 9px;
+  border-radius: 8px;
+}
+
+[data-tema="escuro"] .marca__iniciais {
+  color: #14111c; /* no tema escuro a cor de destaque é clara, então o texto escurece */
+}
+
+.marca__nome {
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  font-size: 1.02rem;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.menu__lista {
+  display: flex;
+  gap: 6px;
+}
+
+.menu__link {
+  display: block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: var(--cor-texto-suave);
+  font-size: .94rem;
+  font-weight: 500;
+  transition: color var(--transicao), background-color var(--transicao);
+}
+
+.menu__link:hover {
+  color: var(--cor-texto);
+  background-color: var(--cor-fundo-alt);
+  text-decoration: none;
+}
+
+/* Classe aplicada pelo JavaScript ao link da seção que está na tela */
+.menu__link--ativo {
+  color: var(--cor-destaque);
+  background-color: color-mix(in srgb, var(--cor-destaque) 12%, transparent);
+}
+
+/* Botão de tema claro/escuro */
+.botao-tema {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--cor-borda);
+  background: none;
+  color: var(--cor-texto-suave);
+  font-family: var(--fonte-mono);
+  font-size: .78rem;
+  padding: 7px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color var(--transicao), color var(--transicao);
+}
+
+.botao-tema:hover {
+  border-color: var(--cor-destaque);
+  color: var(--cor-destaque);
+}
+
+/* Botão "hambúrguer": só aparece em telas pequenas (ver item 11) */
+.botao-menu {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 10px;
+  background: none;
+  cursor: pointer;
+}
+
+.botao-menu__barra {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: var(--cor-texto);
+  transition: transform var(--transicao), opacity var(--transicao);
+}
+
+/* Quando o menu está aberto, as barras viram um "X" */
+.botao-menu--aberto .botao-menu__barra:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.botao-menu--aberto .botao-menu__barra:nth-child(2) {
+  opacity: 0;
+}
+.botao-menu--aberto .botao-menu__barra:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+
+/* ------------------------------------------------------------
+   4. BOTÕES
+   ------------------------------------------------------------ */
+.botao {
+  display: inline-block;
+  padding: 13px 26px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-family: var(--fonte-texto);
+  font-size: .95rem;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: transform var(--transicao), background-color var(--transicao),
+              border-color var(--transicao), color var(--transicao);
+}
+
+.botao:hover {
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.botao--primario {
+  background-color: var(--cor-destaque);
+  color: #ffffff;
+}
+
+[data-tema="escuro"] .botao--primario {
+  color: #14111c;
+}
+
+.botao--primario:hover {
+  background-color: var(--cor-destaque-forte);
+}
+
+.botao--secundario {
+  border-color: var(--cor-borda);
+  color: var(--cor-texto);
+  background: none;
+}
+
+.botao--secundario:hover {
+  border-color: var(--cor-destaque);
+  color: var(--cor-destaque);
+}
+
+.botao--largo {
+  width: 100%;
+}
+
+
+/* ------------------------------------------------------------
+   5. SEÇÃO "SOBRE MIM"
+   ------------------------------------------------------------ */
+.secao--capa {
+  padding-top: 72px;
+}
+
+/* Duas colunas: texto de apresentação e ficha resumida */
+.capa {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 56px;
+  align-items: start;
+  padding-bottom: 24px;
+}
+
+.capa__titulo {
+  font-family: var(--fonte-titulo);
+  font-weight: 800;
+  font-size: clamp(3rem, 9vw, 5.6rem);
+  line-height: .95;
+  letter-spacing: -.035em;
+  margin-bottom: 18px;
+}
+
+/* Assinatura em fonte monoespaçada, com uma linha à esquerda:
+   é o elemento de identidade visual que se repete no site */
+.capa__assinatura {
+  font-family: var(--fonte-mono);
+  font-size: .95rem;
+  color: var(--cor-destaque);
+  border-left: 3px solid var(--cor-realce);
+  padding-left: 14px;
+  margin-bottom: 26px;
+}
+
+.capa__resumo {
+  max-width: 54ch;
+  color: var(--cor-texto-suave);
+  font-size: 1.05rem;
+  margin-bottom: 32px;
+}
+
+.capa__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Ficha rápida (cartão lateral) */
+.ficha {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: 28px;
+  box-shadow: var(--sombra);
+}
+
+.ficha__titulo {
+  font-family: var(--fonte-mono);
+  font-size: .78rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+  margin-bottom: 18px;
+}
+
+.ficha__item {
+  padding: 14px 0;
+  border-top: 1px solid var(--cor-borda);
+}
+
+.ficha__item dt {
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--cor-texto-suave);
+  margin-bottom: 3px;
+}
+
+.ficha__item dd {
+  font-weight: 500;
+}
+
+/* Cartões de áreas de atuação */
+.grade-atuacao {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.cartao {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: 26px 24px;
+  transition: transform var(--transicao), border-color var(--transicao);
+}
+
+.cartao:hover {
+  transform: translateY(-4px);
+  border-color: var(--cor-destaque);
+}
+
+.cartao__titulo {
+  font-family: var(--fonte-titulo);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.cartao p {
+  color: var(--cor-texto-suave);
+  font-size: .95rem;
+}
+
+/* Tecnologias agrupadas */
+.grupos-tecnologia {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.grupo__rotulo {
+  font-family: var(--fonte-mono);
+  font-size: .78rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--cor-realce);
+  margin-bottom: 12px;
+}
+
+/* Etiquetas de tecnologia */
+.etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.etiquetas li {
+  font-family: var(--fonte-mono);
+  font-size: .82rem;
+  padding: 5px 11px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 7px;
+  background-color: var(--cor-superficie);
+  color: var(--cor-texto-suave);
+}
+
+.etiquetas--pequenas li {
+  font-size: .74rem;
+  padding: 3px 8px;
+}
+
+
+/* ------------------------------------------------------------
+   6. SEÇÃO "FORMAÇÃO"
+   A linha do tempo é desenhada com uma borda à esquerda e um
+   círculo posicionado sobre ela com ::before.
+   ------------------------------------------------------------ */
+.linha-tempo {
+  border-left: 2px solid var(--cor-borda);
+  margin: 20px 0 20px 8px;
+  padding-left: 30px;
+}
+
+.linha-tempo__item {
+  position: relative;
+  padding-bottom: 38px;
+}
+
+.linha-tempo__item:last-child {
+  padding-bottom: 0;
+}
+
+/* Círculo que marca cada etapa sobre a linha vertical */
+.linha-tempo__item::before {
+  content: "";
+  position: absolute;
+  left: -39px;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--cor-fundo-alt);
+  border: 3px solid var(--cor-destaque);
+}
+
+.linha-tempo__periodo {
+  font-family: var(--fonte-mono);
+  font-size: .8rem;
+  color: var(--cor-realce);
+}
+
+.linha-tempo__titulo {
+  font-family: var(--fonte-titulo);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 4px 0 2px;
+}
+
+.linha-tempo__instituicao {
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.linha-tempo__item p:last-child {
+  color: var(--cor-texto-suave);
+  max-width: 60ch;
+}
+
+/* Idiomas com barra de proficiência */
+.idiomas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  max-width: 900px;
+}
+
+.idioma__cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.idioma__nome {
+  font-weight: 600;
+}
+
+.idioma__nivel {
+  font-family: var(--fonte-mono);
+  font-size: .78rem;
+  color: var(--cor-texto-suave);
+}
+
+.barra {
+  height: 7px;
+  background-color: var(--cor-borda);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.barra__preenchimento {
+  display: block;
+  height: 100%;
+  background-color: var(--cor-destaque);
+  border-radius: 999px;
+}
+
+
+/* ------------------------------------------------------------
+   7. SEÇÃO "PORTFÓLIO"
+   ------------------------------------------------------------ */
+.grade-projetos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 36px;
+}
+
+.projeto {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: 28px 26px;
+  transition: transform var(--transicao), box-shadow var(--transicao);
+}
+
+.projeto:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--sombra);
+}
+
+.projeto__tipo {
+  font-family: var(--fonte-mono);
+  font-size: .74rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--cor-realce);
+  margin-bottom: 10px;
+}
+
+.projeto__titulo {
+  font-family: var(--fonte-titulo);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.projeto__descricao {
+  color: var(--cor-texto-suave);
+  font-size: .95rem;
+  margin-bottom: 18px;
+}
+
+/* margin-top: auto empurra o link para a base do cartão,
+   deixando todos os cartões alinhados */
+.projeto__link {
+  margin-top: auto;
+  padding-top: 16px;
+  font-weight: 600;
+  font-size: .92rem;
+}
+
+.projeto .etiquetas {
+  margin-bottom: 4px;
+}
+
+
+/* ------------------------------------------------------------
+   8. SEÇÃO "CONTATO"
+   ------------------------------------------------------------ */
+.contato {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  margin-top: 36px;
+  align-items: start;
+}
+
+.canais {
+  margin-top: 28px;
+  display: grid;
+  gap: 16px;
+}
+
+.canais li {
+  display: grid;
+  gap: 2px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.canais__rotulo {
+  font-family: var(--fonte-mono);
+  font-size: .74rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+}
+
+/* Formulário */
+.formulario {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: 32px;
+  box-shadow: var(--sombra);
+}
+
+.campo {
+  margin-bottom: 20px;
+}
+
+.campo__rotulo {
+  display: block;
+  font-size: .85rem;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.campo__entrada {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 10px;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: var(--fonte-texto);
+  font-size: .96rem;
+  transition: border-color var(--transicao), box-shadow var(--transicao);
+}
+
+.campo__entrada:focus {
+  outline: none;
+  border-color: var(--cor-destaque);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--cor-destaque) 22%, transparent);
+}
+
+textarea.campo__entrada {
+  resize: vertical; /* o usuário só pode redimensionar na vertical */
+}
+
+.campo__auxiliar {
+  font-family: var(--fonte-mono);
+  font-size: .74rem;
+  color: var(--cor-texto-suave);
+  margin-top: 6px;
+}
+
+/* Mensagem de erro: fica invisível até o JavaScript escrever um texto nela */
+.campo__erro {
+  min-height: 18px;
+  font-size: .82rem;
+  color: #c62828;
+  margin-top: 5px;
+}
+
+[data-tema="escuro"] .campo__erro {
+  color: #ff8a8a;
+}
+
+/* Classe aplicada pelo JavaScript ao campo que falhou na validação */
+.campo__entrada--invalido {
+  border-color: #c62828;
+}
+
+
+/* ------------------------------------------------------------
+   9. MODAL DE CONFIRMAÇÃO
+   Escondido com visibility/opacity para permitir transição
+   suave ao aparecer.
+   ------------------------------------------------------------ */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-color: rgba(20, 17, 28, .62);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transicao), visibility var(--transicao);
+}
+
+/* Classe adicionada pelo JavaScript para exibir o modal */
+.modal--ativa {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal__caixa {
+  background-color: var(--cor-superficie);
+  border-radius: 18px;
+  padding: 40px 34px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  transform: translateY(14px);
+  transition: transform var(--transicao);
+}
+
+.modal--ativa .modal__caixa {
+  transform: translateY(0);
+}
+
+.modal__icone {
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background-color: var(--cor-destaque);
+  color: #ffffff;
+  font-size: 1.6rem;
+  line-height: 54px;
+}
+
+[data-tema="escuro"] .modal__icone {
+  color: #14111c;
+}
+
+.modal__titulo {
+  font-family: var(--fonte-titulo);
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+
+.modal__texto {
+  color: var(--cor-texto-suave);
+  margin-bottom: 24px;
+}
+
+
+/* ------------------------------------------------------------
+   10. RODAPÉ
+   ------------------------------------------------------------ */
+.rodape {
+  border-top: 1px solid var(--cor-borda);
+  padding: 34px 0;
+  font-size: .88rem;
+  color: var(--cor-texto-suave);
+}
+
+.rodape__interno {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+/* ------------------------------------------------------------
+   11. RESPONSIVIDADE
+   Em telas de até 860px o layout vira uma coluna só e o menu
+   passa a ser aberto pelo botão hambúrguer.
+   ------------------------------------------------------------ */
+@media (max-width: 860px) {
+
+  .secao {
+    padding: 64px 0;
+  }
+
+  .capa,
+  .contato {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  /* Mostra o botão do menu */
+  .botao-menu {
+    display: flex;
+  }
+
+  /* Menu escondido: vira um painel abaixo do cabeçalho */
+  .menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 18px 24px 26px;
+    background-color: var(--cor-fundo);
+    border-bottom: 1px solid var(--cor-borda);
+    display: none; /* o JavaScript alterna esta classe */
+  }
+
+  /* Classe adicionada pelo JavaScript ao abrir o menu */
+  .menu--aberto {
+    display: flex;
+  }
+
+  .menu__lista {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .menu__link {
+    padding: 12px 14px;
+    border-radius: 10px;
+  }
+
+  .botao-tema {
+    justify-content: center;
+  }
+
+  .cabecalho__interno {
+    position: relative;
+  }
+
+  .formulario {
+    padding: 24px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .capa__acoes .botao {
+    width: 100%;
+  }
+}
+
+
+/* ------------------------------------------------------------
+   12. ACESSIBILIDADE
+   ------------------------------------------------------------ */
+
+/* Link que aparece só quando recebe foco pelo teclado */
+.pular-conteudo {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background-color: var(--cor-destaque);
+  color: #ffffff;
+  padding: 10px 16px;
+  z-index: 200;
+}
+
+.pular-conteudo:focus {
+  left: 8px;
+  top: 8px;
+}
+
+/* Contorno visível ao navegar com Tab */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--cor-realce);
+  outline-offset: 2px;
+}
+
+/* Respeita quem configurou o sistema para reduzir animações */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}
