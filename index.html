@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  PORTFÓLIO PESSOAL - VALLERY CARVALHO
+  Atividade Prática - Fundamentos da Programação Web - UNINTER
+  Estrutura: Single Page Website com navegação por âncoras
+  Tecnologias: HTML5 + CSS3 puro + JavaScript puro (sem frameworks)
+  ============================================================
+-->
+<html lang="pt-BR">
+<head>
+  <!-- Codificação de caracteres: garante acentuação correta em português -->
+  <meta charset="UTF-8">
+
+  <!-- Viewport: essencial para o site ser responsivo em celulares e tablets -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Metadados para buscadores e compartilhamento -->
+  <meta name="description" content="Portfólio de Vallery Carvalho, desenvolvedora full stack. Python/Django, React, SQL e Power BI.">
+  <meta name="author" content="Vallery Carvalho">
+
+  <title>Vallery Carvalho | Desenvolvedora Full Stack</title>
+
+  <!-- Fontes externas (tipografia). Não é framework, apenas arquivos de fonte. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Folha de estilos própria, escrita em CSS3 puro -->
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+
+<body>
+
+  <!-- Link de acessibilidade: permite pular o menu usando o teclado (tecla Tab) -->
+  <a class="pular-conteudo" href="#sobre">Pular para o conteúdo</a>
+
+  <!--
+    ==========================================================
+    CABEÇALHO E MENU DE NAVEGAÇÃO
+    O menu é fixo no topo e aparece em todas as seções.
+    Os links usam âncoras (#sobre, #formacao...) para navegar
+    dentro da própria página, sem recarregar o navegador.
+    ==========================================================
+  -->
+  <header class="cabecalho" id="topo">
+    <div class="cabecalho__interno">
+
+      <!-- Marca / logotipo textual -->
+      <a class="marca" href="#topo">
+        <span class="marca__iniciais">VC</span>
+        <span class="marca__nome">Vallery Carvalho</span>
+      </a>
+
+      <!-- Botão que abre e fecha o menu em telas pequenas (menu "hambúrguer").
+           O atributo aria-expanded é atualizado pelo JavaScript para acessibilidade. -->
+      <button class="botao-menu" id="botao-menu" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu de navegação">
+        <span class="botao-menu__barra"></span>
+        <span class="botao-menu__barra"></span>
+        <span class="botao-menu__barra"></span>
+      </button>
+
+      <!-- Menu principal: os 4 links obrigatórios da atividade -->
+      <nav class="menu" id="menu" aria-label="Navegação principal">
+        <ul class="menu__lista">
+          <li><a class="menu__link" href="#sobre">Sobre mim</a></li>
+          <li><a class="menu__link" href="#formacao">Formação</a></li>
+          <li><a class="menu__link" href="#portfolio">Portfólio</a></li>
+          <li><a class="menu__link" href="#contato">Contato</a></li>
+        </ul>
+
+        <!-- Botão de alternância entre tema claro e escuro (controlado por JavaScript) -->
+        <button class="botao-tema" id="botao-tema" aria-label="Alternar entre tema claro e escuro">
+          <span class="botao-tema__icone" id="icone-tema" aria-hidden="true">◐</span>
+          <span class="botao-tema__texto" id="texto-tema">Tema escuro</span>
+        </button>
+      </nav>
+
+    </div>
+  </header>
+
+  <main>
+
+    <!--
+      ========================================================
+      SEÇÃO 1 - SOBRE MIM
+      Apresentação pessoal, área de atuação, stack e hobbies.
+      ========================================================
+    -->
+    <section class="secao secao--capa" id="sobre">
+      <div class="conteudo">
+
+        <div class="capa">
+          <div class="capa__texto">
+            <p class="eyebrow">Votuporanga, São Paulo</p>
+
+            <h1 class="capa__titulo">
+              Vallery<br>Carvalho
+            </h1>
+
+            <!-- Bloco em fonte monoespaçada: referência visual ao ambiente de código -->
+            <p class="capa__assinatura">
+              &lt;desenvolvedora full stack /&gt;
+            </p>
+
+            <p class="capa__resumo">
+              Construo sistemas web de ponta a ponta: back-end em Python com Django,
+              front-end em React e JavaScript, e integração entre módulos por APIs
+              RESTful. Trabalho em squads com Scrum e Kanban, cuido do deploy com
+              Docker e transformo dados em painéis de acompanhamento no Power BI.
+            </p>
+
+            <div class="capa__acoes">
+              <a class="botao botao--primario" href="#portfolio">Ver projetos</a>
+              <a class="botao botao--secundario" href="#contato">Falar comigo</a>
+            </div>
+          </div>
+
+          <!-- Cartão lateral com um resumo rápido, em formato de "ficha técnica" -->
+          <aside class="ficha">
+            <h2 class="ficha__titulo">Ficha rápida</h2>
+            <dl class="ficha__lista">
+              <div class="ficha__item">
+                <dt>Formação</dt>
+                <dd>Análise e Desenvolvimento de Sistemas</dd>
+              </div>
+              <div class="ficha__item">
+                <dt>Instituição</dt>
+                <dd>UNINTER — conclusão prevista em 2027</dd>
+              </div>
+              <div class="ficha__item">
+                <dt>Foco</dt>
+                <dd>Desenvolvimento full stack e integração de sistemas</dd>
+              </div>
+              <div class="ficha__item">
+                <dt>Idiomas</dt>
+                <dd>Português, inglês e espanhol</dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+
+        <!-- Áreas de atuação -->
+        <h2 class="secao__titulo">O que eu faço</h2>
+
+        <div class="grade-atuacao">
+          <article class="cartao">
+            <h3 class="cartao__titulo">Desenvolvimento full stack</h3>
+            <p>Sistemas web com Django no back-end e React/JavaScript no front-end,
+               do modelo de dados até a interface entregue ao usuário.</p>
+          </article>
+
+          <article class="cartao">
+            <h3 class="cartao__titulo">Integração de sistemas</h3>
+            <p>APIs RESTful para comunicação entre módulos, testadas e documentadas
+               com Postman.</p>
+          </article>
+
+          <article class="cartao">
+            <h3 class="cartao__titulo">Metodologias ágeis</h3>
+            <p>Atuação em squads usando Scrum e Kanban, com acompanhamento de
+               entregas e ritos da equipe.</p>
+          </article>
+
+          <article class="cartao">
+            <h3 class="cartao__titulo">Infraestrutura e dados</h3>
+            <p>Deploy com Docker, noções de AWS e criação de dashboards de
+               indicadores em Power BI.</p>
+          </article>
+        </div>
+
+        <!-- Tecnologias: lista em fonte monoespaçada, agrupada por finalidade -->
+        <h2 class="secao__titulo">Tecnologias</h2>
+
+        <div class="grupos-tecnologia">
+          <div class="grupo">
+            <h3 class="grupo__rotulo">Stack principal</h3>
+            <ul class="etiquetas">
+              <li>Python</li><li>Django</li><li>MySQL</li><li>PostgreSQL</li>
+              <li>Git</li><li>GitHub</li><li>Docker</li><li>Postman</li>
+            </ul>
+          </div>
+
+          <div class="grupo">
+            <h3 class="grupo__rotulo">Dados</h3>
+            <ul class="etiquetas">
+              <li>Power BI</li><li>Excel</li><li>SQL</li>
+            </ul>
+          </div>
+
+          <div class="grupo">
+            <h3 class="grupo__rotulo">Complementares</h3>
+            <ul class="etiquetas">
+              <li>JavaScript ES6+</li><li>TypeScript</li><li>React</li>
+              <li>Java</li><li>Spring Boot</li><li>Node.js</li>
+              <li>MongoDB</li><li>AWS</li>
+            </ul>
+          </div>
+
+          <div class="grupo">
+            <h3 class="grupo__rotulo">Processos</h3>
+            <ul class="etiquetas">
+              <li>Scrum</li><li>Kanban</li><li>Documentação de processos</li>
+              <li>Suporte ao cliente</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Hobbies -->
+        <h2 class="secao__titulo">Fora do código</h2>
+        <p class="texto-largo">
+          Leitura, viagens, cinema e atividades físicas. Ler e viajar são o que me
+          fazem sair do repetido e voltar com ideias novas para os projetos;
+          treinar é o que mantém a rotina de estudo funcionando.
+        </p>
+
+      </div>
+    </section>
+
+
+    <!--
+      ========================================================
+      SEÇÃO 2 - FORMAÇÃO
+      Formação acadêmica, cursos e idiomas.
+      A linha do tempo é vertical porque a ordem cronológica
+      é informação relevante aqui.
+      ========================================================
+    -->
+    <section class="secao secao--alternada" id="formacao">
+      <div class="conteudo">
+
+        <p class="eyebrow">02 — Formação</p>
+        <h2 class="secao__titulo secao__titulo--grande">Estudo e qualificação</h2>
+
+        <ol class="linha-tempo">
+          <li class="linha-tempo__item">
+            <span class="linha-tempo__periodo">2023 — 2027 (previsto)</span>
+            <h3 class="linha-tempo__titulo">Análise e Desenvolvimento de Sistemas</h3>
+            <p class="linha-tempo__instituicao">Centro Universitário Internacional UNINTER</p>
+            <p>Graduação em andamento. Estudo de lógica de programação, estruturas de
+               dados, banco de dados, engenharia de software e programação web.</p>
+          </li>
+
+          <!-- ===== SUBSTITUIR: acrescente aqui sua formação anterior ===== -->
+          <li class="linha-tempo__item">
+            <span class="linha-tempo__periodo">Ano de conclusão</span>
+            <h3 class="linha-tempo__titulo">Ensino Médio</h3>
+            <p class="linha-tempo__instituicao">Nome da escola — Votuporanga, SP</p>
+            <p>Descreva aqui, em uma linha, algo relevante desse período.</p>
+          </li>
+
+          <!-- ===== SUBSTITUIR: cursos livres e certificados que você tenha ===== -->
+          <li class="linha-tempo__item">
+            <span class="linha-tempo__periodo">Ano</span>
+            <h3 class="linha-tempo__titulo">Nome do curso livre ou certificado</h3>
+            <p class="linha-tempo__instituicao">Instituição — carga horária</p>
+            <p>Conteúdo principal do curso.</p>
+          </li>
+        </ol>
+
+        <!-- Idiomas: barras de proficiência feitas apenas com CSS -->
+        <h3 class="secao__titulo">Idiomas</h3>
+
+        <ul class="idiomas">
+          <li class="idioma">
+            <div class="idioma__cabecalho">
+              <span class="idioma__nome">Português</span>
+              <span class="idioma__nivel">Nativo</span>
+            </div>
+            <div class="barra"><span class="barra__preenchimento" style="width: 100%;"></span></div>
+          </li>
+
+          <li class="idioma">
+            <div class="idioma__cabecalho">
+              <span class="idioma__nome">Inglês</span>
+              <span class="idioma__nivel">Intermediário</span>
+            </div>
+            <div class="barra"><span class="barra__preenchimento" style="width: 60%;"></span></div>
+          </li>
+
+          <li class="idioma">
+            <div class="idioma__cabecalho">
+              <span class="idioma__nome">Espanhol</span>
+              <span class="idioma__nivel">Básico / intermediário</span>
+            </div>
+            <div class="barra"><span class="barra__preenchimento" style="width: 45%;"></span></div>
+          </li>
+        </ul>
+
+      </div>
+    </section>
+
+
+    <!--
+      ========================================================
+      SEÇÃO 3 - PORTFÓLIO
+      Cartões com os trabalhos já realizados e links para
+      o repositório ou para o projeto publicado.
+      ========================================================
+    -->
+    <section class="secao" id="portfolio">
+      <div class="conteudo">
+
+        <p class="eyebrow">03 — Portfólio</p>
+        <h2 class="secao__titulo secao__titulo--grande">Trabalhos realizados</h2>
+
+        <p class="texto-largo">
+          Seleção de projetos que representam o que sei construir hoje: back-end,
+          integração entre sistemas e visualização de dados.
+        </p>
+
+        <div class="grade-projetos">
+
+          <!-- ===== PROJETO 1 ===== -->
+          <article class="projeto">
+            <p class="projeto__tipo">Projeto acadêmico</p>
+            <h3 class="projeto__titulo">Portfólio online</h3>
+            <p class="projeto__descricao">
+              Este site: página única em HTML5, CSS3 e JavaScript puro, com navegação
+              por âncoras, tema claro/escuro e formulário de contato validado no
+              navegador.
+            </p>
+            <ul class="etiquetas etiquetas--pequenas">
+              <li>HTML5</li><li>CSS3</li><li>JavaScript</li>
+            </ul>
+            <!-- Link para o código-fonte deste próprio site no GitHub -->
+            <a class="projeto__link" href="https://github.com/Larelly/portfolio-vallery-carvalho" target="_blank" rel="noopener">
+              Ver código no GitHub →
+            </a>
+          </article>
+
+          <!-- ===== PROJETO 2 - SUBSTITUIR pelos seus dados ===== -->
+          <article class="projeto">
+            <p class="projeto__tipo">Tipo do projeto</p>
+            <h3 class="projeto__titulo">Nome do projeto</h3>
+            <p class="projeto__descricao">
+              Descreva em duas ou três linhas o problema que o projeto resolve e
+              qual foi a sua participação nele.
+            </p>
+            <ul class="etiquetas etiquetas--pequenas">
+              <li>Python</li><li>Django</li><li>PostgreSQL</li>
+            </ul>
+            <a class="projeto__link" href="#" target="_blank" rel="noopener">Ver projeto →</a>
+          </article>
+
+          <!-- ===== PROJETO 3 - SUBSTITUIR pelos seus dados ===== -->
+          <article class="projeto">
+            <p class="projeto__tipo">Tipo do projeto</p>
+            <h3 class="projeto__titulo">Nome do projeto</h3>
+            <p class="projeto__descricao">
+              Descreva em duas ou três linhas o problema que o projeto resolve e
+              qual foi a sua participação nele.
+            </p>
+            <ul class="etiquetas etiquetas--pequenas">
+              <li>Power BI</li><li>SQL</li><li>Excel</li>
+            </ul>
+            <a class="projeto__link" href="#" target="_blank" rel="noopener">Ver projeto →</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!--
+      ========================================================
+      SEÇÃO 4 - CONTATO
+      Formulário com nome, e-mail e mensagem.
+      A validação e a simulação de envio são feitas em
+      JavaScript (arquivo js/script.js).
+      O atributo novalidate desliga a validação automática do
+      navegador para que a nossa validação seja a única usada.
+      ========================================================
+    -->
+    <section class="secao secao--alternada" id="contato">
+      <div class="conteudo">
+
+        <p class="eyebrow">04 — Contato</p>
+        <h2 class="secao__titulo secao__titulo--grande">Vamos conversar</h2>
+
+        <div class="contato">
+
+          <!-- Coluna com os canais diretos -->
+          <div class="contato__canais">
+            <p class="texto-largo">
+              Estou aberta a oportunidades de estágio e vagas júnior em
+              desenvolvimento. Use o formulário ou fale comigo direto pelos canais
+              abaixo.
+            </p>
+
+            <ul class="canais">
+              <!-- ===== SUBSTITUIR: coloque seu e-mail real ===== -->
+              <li>
+                <span class="canais__rotulo">E-mail</span>
+                <a href="mailto:seu.email@exemplo.com">seu.email@exemplo.com</a>
+              </li>
+
+              <!-- Perfil no GitHub -->
+              <li>
+                <span class="canais__rotulo">GitHub</span>
+                <a href="https://github.com/Larelly" target="_blank" rel="noopener">github.com/Larelly</a>
+              </li>
+
+              <!-- ===== SUBSTITUIR: coloque seu LinkedIn ===== -->
+              <li>
+                <span class="canais__rotulo">LinkedIn</span>
+                <a href="https://www.linkedin.com/in/SEU-PERFIL" target="_blank" rel="noopener">linkedin.com/in/SEU-PERFIL</a>
+              </li>
+
+              <li>
+                <span class="canais__rotulo">Localização</span>
+                <span>Votuporanga, São Paulo</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Formulário de contato -->
+          <form class="formulario" id="formulario-contato" novalidate>
+
+            <div class="campo">
+              <label class="campo__rotulo" for="nome">Nome</label>
+              <input class="campo__entrada" type="text" id="nome" name="nome" placeholder="Como devo te chamar?">
+              <!-- Parágrafo reservado para a mensagem de erro preenchida pelo JavaScript -->
+              <p class="campo__erro" id="erro-nome" role="alert"></p>
+            </div>
+
+            <div class="campo">
+              <label class="campo__rotulo" for="email">E-mail</label>
+              <input class="campo__entrada" type="email" id="email" name="email" placeholder="usuario@dominio.com">
+              <p class="campo__erro" id="erro-email" role="alert"></p>
+            </div>
+
+            <div class="campo">
+              <label class="campo__rotulo" for="mensagem">Mensagem</label>
+              <textarea class="campo__entrada" id="mensagem" name="mensagem" rows="5" placeholder="Escreva sua mensagem"></textarea>
+              <!-- Contador de caracteres atualizado em tempo real pelo JavaScript -->
+              <p class="campo__auxiliar"><span id="contador">0</span> caracteres</p>
+              <p class="campo__erro" id="erro-mensagem" role="alert"></p>
+            </div>
+
+            <button class="botao botao--primario botao--largo" type="submit">Enviar mensagem</button>
+          </form>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!--
+    ==========================================================
+    JANELA MODAL DE CONFIRMAÇÃO
+    Fica escondida por padrão (classe "modal" sem "modal--ativa").
+    O JavaScript a exibe depois que o formulário é validado,
+    simulando o envio da mensagem.
+    ==========================================================
+  -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" aria-hidden="true">
+    <div class="modal__caixa">
+      <p class="modal__icone" aria-hidden="true">✓</p>
+      <h2 class="modal__titulo" id="modal-titulo">Mensagem enviada com sucesso!</h2>
+      <p class="modal__texto">Obrigada pelo contato. Respondo assim que possível.</p>
+      <button class="botao botao--primario" id="fechar-modal" type="button">Fechar</button>
+    </div>
+  </div>
+
+
+  <!-- RODAPÉ -->
+  <footer class="rodape">
+    <div class="conteudo rodape__interno">
+      <p>Vallery Carvalho — RU 4734688</p>
+      <p>Atividade Prática de Fundamentos da Programação Web — UNINTER — <span id="ano"></span></p>
+      <a class="rodape__topo" href="#topo">Voltar ao topo ↑</a>
+    </div>
+  </footer>
+
+  <!-- Arquivo JavaScript carregado no final do body para que o HTML já exista
+       quando o script tentar acessar os elementos da página -->
+  <script src="js/script.js"></script>
+</body>
+</html>
